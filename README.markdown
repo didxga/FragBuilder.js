@@ -2,7 +2,7 @@
 *Document Fragment builder from JSON input or HTML String*
 ###sample usage
 	
-	var df = FragBuilder.json([{
+	var df = FragBuilder([{
 		'tagName': 'div',
 		'style': {
 			'color': 'red',
@@ -20,7 +20,7 @@
 		{
 			'textContent': ' there'}]}]);
 	
-	var dfs = FragBuilder.string("<div>Hello <small>world</small></div>");
+	var dfs = FragBuilder("<div>Hello <small>world</small></div>");
 	document.getElementsByTagName('body')[0].appendChild(df);
 	document.getElementsByTagName('body')[0].appendChild(dfs);
 	

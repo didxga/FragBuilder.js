@@ -28,7 +28,7 @@ var FragBuilder = (function() {
                     case ('childNodes'):
                         el.appendChild(generateFragmentFromJSON(val));
                         break;
-                    default: 
+                    default:
                         if (part in el) {
                             el[part] = val;
                         }
@@ -37,7 +37,7 @@ var FragBuilder = (function() {
                 }
                 tree.appendChild(el);
             } else {
-                throw "Error: Malformed Fragment";
+                throw "Error: Malformed JSON Fragment";
             }
         });
         return tree;
@@ -51,8 +51,11 @@ var FragBuilder = (function() {
         }
         return tree;
     };
-    return {
-        'json': generateFragmentFromJSON,
-        'string': generateFragmentFromString
+    return function(fragment) {
+        if( typeof fragment === 'string' ) {
+            return generateFragmentFromString( fragment );
+        } else {
+            return generateFragmentFromJSON( fragment );
+        }
     };
 }());
