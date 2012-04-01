@@ -28,11 +28,10 @@ var FragBuilder = (function() {
                     case ('childNodes'):
                         el.appendChild(generateFragmentFromJSON(val));
                         break;
-                    default: /* is this needed ?
+                    default: 
                         if (part in el) {
                             el[part] = val;
-                        } */
-                        el.setAttribute(part, val);
+                        }
                         break;
                     }
                 }
