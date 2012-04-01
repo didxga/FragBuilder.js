@@ -8,6 +8,6 @@
 
 ###outputs
 	
-	<div style="font-weight: 'bold';">Hello World</div>;
+	<div style="font-weight: 'bold';">Hello World</div>
 	<div style="font-style: 'italics';">GoodBye World</div>
 	
