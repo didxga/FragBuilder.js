@@ -2,23 +2,31 @@
 *Document Fragment builder from JSON input or HTML String*
 ###sample usage
 	
-	var df = FragBuilder([{
-		'tagName': 'div',
-		'style': {
-			'color': 'red',
-			'padding': '2px 4px'        
-		},
-		'childNodes': [{
-			'textContent': 'Hi '},
+	var df = FragBuilder([
 		{
-			'tagName': 'span',
-			'style': {
-				'background-color': 'black'  
+			"tagName": "div",
+			"style": {
+				"color": "red",
+				"padding": "2px4px"
 			},
-			'id': 'myID',
-			'textContent': ','},
-		{
-			'textContent': ' there'}]}]);
+			"childNodes": [
+				{
+					"textContent": "Hi"
+				},
+				{
+					"tagName": "span",
+					"style": {
+						"background-color": "black"
+					},
+					"id": "myID",
+					"textContent": ","
+				},
+				{
+					"textContent": "there"
+				}
+			]
+		}
+	]);
 	
 	var dfs = FragBuilder("<div>Hello <small>world</small></div>");
 	document.getElementsByTagName('body')[0].appendChild(df);
