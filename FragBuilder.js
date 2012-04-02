@@ -21,10 +21,6 @@ var FragBuilder = (function() {
                     case ('style'):
                         applyStyles(el, val);
                         break;
-                    case ('className'):
-                        el.className = val;
-                        el.setAttribute('class', val);
-                        break;
                     case ('childNodes'):
                         el.appendChild(generateFragmentFromJSON(val));
                         break;
