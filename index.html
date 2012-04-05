@@ -59,9 +59,9 @@ FragBuilder aims to meet this need by efficiently converting your JSON or HTMLSt
 
 <p>Organizations are now adopting the idea that an open Web API to retrieve data information is a gold mine. One which we can easily leverage within our web apps using JSONP to retrieve the data. No need to set up a complex server architecture: Get data from a given web service, get the template off your static file server, render, and then voilà. Data from various sources can even be merged into complex models. Imagine pulling data from the data science toolkit to get coordinate information for a given IP address, then grabbing some photo URLs off Flickr and a map from Google for the associated coordinates. All this using a bit of JavaScript, JSON, some Unicorns, on the client side.</p>
 
-<h3>Example of use</h3>
+<h3>Demo</h3>
 
-<pre><code>var fragment_input = [
+<textarea id="input" style="width: 100%;" rows="19">[
     {
         "tagName": "div",
         "className": "foo",
@@ -71,7 +71,7 @@ FragBuilder aims to meet this need by efficiently converting your JSON or HTMLSt
                 "textContent": "Hello "
             },
             {
-                "tagName": "span"
+                "tagName": "span",
                 "style": {
                     "font-weight": "bold"
                 },
@@ -79,13 +79,12 @@ FragBuilder aims to meet this need by efficiently converting your JSON or HTMLSt
             }
         ]
     }
-];
-var frag = FragBuilder(frag_input);
-// outputs
-&lt;div class="foo" id="bar"&gt;
-    Hello &lt;span style="font-weight: bold;"&gt;World!&lt;/span&gt;
-&lt;/div&gt;
-</code></pre>
+]</textarea>
+<button onclick="render();">Generate</button>
+<hr>
+<h3>Results</h3>
+<div id="preview"></div>
+<textarea id="output" style="width: 100%;" rows="19" placeholder="html"></textarea>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
 
 <h3>Support or Contact</h3>
 
@@ -97,6 +96,89 @@ var frag = FragBuilder(frag_input);
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+<script type="text/javascript">
+  /* Demo code only */
+var FragBuilder = (function() {
+    var applyStyles = function(element, style_object) {
+        for (var prop in style_object) {
+            element.style[prop] = style_object[prop];
+        }
+    };
+    var generateFragmentFromJSON = function(json) {
+        var tree = document.createDocumentFragment();
+        json.forEach(function(obj) {
+            if (!('tagName' in obj) && 'textContent' in obj) {
+                tree.appendChild(document.createTextNode(obj['textContent']));
+            } else if ('tagName' in obj) {
+                var el = document.createElement(obj.tagName);
+                delete obj.tagName;
+                for (part in obj) {
+                    var val = obj[part];
+                    switch (part) {
+                    case ('textContent'):
+                        el.appendChild(document.createTextNode(val));
+                        break;
+                    case ('style'):
+                        applyStyles(el, val);
+                        break;
+                    case ('childNodes'):
+                        el.appendChild(generateFragmentFromJSON(val));
+                        break;
+                    default:
+                        if (part in el) {
+                            el[part] = val;
+                        }
+                        break;
+                    }
+                }
+                tree.appendChild(el);
+            } else {
+                throw "Error: Malformed JSON Fragment";
+            }
+        });
+        return tree;
+    };
+    var generateFragmentFromString = function(HTMLstring) {
+        var div = document.createElement("div"),
+            tree = document.createDocumentFragment();
+        div.innerHTML = HTMLstring;
+        while (div.hasChildNodes()) {
+            tree.appendChild(div.firstChild);
+        }
+        return tree;
+    };
+    return function(fragment) {
+        if (typeof fragment === 'string') {
+            return generateFragmentFromString(fragment);
+        } else {
+            return generateFragmentFromJSON(fragment);
+        }
+    };
+}());
+
+function replaceChildren(element, node) {
+    while (element.hasChildNodes()) {
+        element.removeChild(element.lastChild);
+    }
+    if (node) {
+        element.appendChild(node);
+    }
+}
+
+function render() {
+    var input = document.getElementById('input'),
+        output = document.getElementById('output'),
+        preview = document.getElementById('preview');
+    try {
+        var json = JSON.parse(input.value);
+        replaceChildren(preview, FragBuilder(json));
+        output.value = preview.innerHTML;
+    } catch (e) {
+        replaceChildren(preview, null);
+        output.value = e.toString();
+    }
+}​
+</script>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
