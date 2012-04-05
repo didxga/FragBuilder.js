@@ -80,7 +80,7 @@ FragBuilder aims to meet this need by efficiently converting your JSON or HTMLSt
         ]
     }
 ]</textarea>
-<button onclick="render();">Generate</button>
+<button id="render">Generate</button>
 <hr>
 <h3>Results</h3>
 <div id="preview"></div>
@@ -177,7 +177,12 @@ function render() {
         replaceChildren(preview, null);
         output.value = e.toString();
     }
-}​
+}
+
+var btn = document.getElementById('render');
+btn.onclick = function() {
+  render();
+};
 </script>
 <script type="text/javascript">
 
