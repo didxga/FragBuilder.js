@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Fragbuilder.js by rlemon</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Fragbuilder.js</h1>
+        <p>Document Fragment builder from JSON input.</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/rlemon/FragBuilder.js" class="button fork"><strong>Fork On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/rlemon/FragBuilder.js/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/rlemon/FragBuilder.js/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h3>Templating</h3>
+
+<p>Using a template engine on the server is nothing new. Client side templating on the other hand is a relative newcomer and some high profile websites have used it for some time now. The basic idea behind this is to not only offload the server from rendering the template, but also to easily leverage existing web service APIs while un-cluttering JavaScript code with markup.<br>
+FragBuilder aims to meet this need by efficiently converting your JSON or HTMLString input into a DocumentFragment which can then be inserted into the DOM.  </p>
+
+<h3>HTML in your JavaScript?</h3>
+
+<p>How many time have you seen or been obligated to process strings of HTML within your JavaScript code? Workable but ugly chunks of <code>return ‘&lt;h2&gt;’ + header + ‘&lt;/h2&gt;’;</code>. Separation of content anyone? I like the idea of having my JavaScript code completely free of any markup. If this principle has always been good on the server-side, why should it be any different on the client side? JSON is a well known, and accepted format for organizing data in JavaScript. <em>It only makes sense...</em></p>
+
+<h3>Free up your server.</h3>
+
+<p>Obviously, the greater the load on the server, the slower the response time. A few years ago, client side templating was unthinkable because of the relative slowness of devices and browsers. With ever advancing technologies, hardware and browsers are getting speedier. Thanks to efficient JavaScript engines such as V8, Monkeys, Nitro and the like, delegating some CPU cycles off the server seems logical. We are simply moving from the <code>Request -&gt; Render -&gt; Response</code> paradigm to the <code>Request -&gt; Response -&gt; Render</code> one.</p>
+
+<p>Servers are now serving static views and models while the controller sits on the client.</p>
+
+<h3>Web Service APIs, Who's content is it anyways?</h3>
+
+<p>Organizations are now adopting the idea that an open Web API to retrieve data information is a gold mine. One which we can easily leverage within our web apps using JSONP to retrieve the data. No need to set up a complex server architecture: Get data from a given web service, get the template off your static file server, render, and then voilà. Data from various sources can even be merged into complex models. Imagine pulling data from the data science toolkit to get coordinate information for a given IP address, then grabbing some photo URLs off Flickr and a map from Google for the associated coordinates. All this using a bit of JavaScript, JSON, some Unicorns, on the client side.</p>
+
+<h3>Example of use</h3>
+
+<pre><code>var fragment_input = [
+    {
+        "tagName": "div",
+        "className": "foo",
+        "id": "bar",
+        "childNodes": [
+            {
+                "textContent": "Hello "
+            },
+            {
+                "tagName": "span"
+                "style": {
+                    "font-weight": "bold"
+                },
+                "textContent": "World!"
+            }
+        ]
+    }
+];
+var frag = FragBuilder(frag_input);
+// outputs
+&lt;div class="foo" id="bar"&gt;
+    Hello &lt;span style="font-weight: bold;"&gt;World!&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h3>Support or Contact</h3>
+
+<p>Having trouble with FragBuilder? Check out the documentation at <a href="http://github.com/rlemon/FragBuilder.js/README.markdown">http://github.com/rlemon/FragBuilder.js/README.markdown</a> or contact rob.lemon@gmail.com and I’ll help you sort it out.</p>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/rlemon">rlemon</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
